@@ -4,7 +4,7 @@
     use PHP\modelo\DAO\Conexao;
 
     class Consultar{
-        function consultarLogin(Conexao $conexao, string $loginn, string $senha){
+        function consultarPedido(Conexao $conexao, string $loginn, string $senha){
           try {
             $conn = $conexao->conectar();
             $sql = "select * from cliente where loginn = '$loginn' and senha = '$senha'";
@@ -18,23 +18,53 @@
             echo "Algo deu errado!".$erro;
           }
         }
-        function consultarPedido(Conexao $conexao, int $idPedido){
-          try {
+ 
+      function consultarCliente(Conexao $conexao, int $idCliente){
+        try {
             $conn = $conexao->conectar();
-            $sql = "select nome,endereco from pedido inner join cliente on nome = idCliente and idPedido = '$idPedido'";
+            $sql = "select * from cliente";
             $result = mysqli_query($conn, $sql);
-  
-            while ($dados = mysqli_fetch_array($result)){ 
-              if ($dados['idPedido'] == $idPedido){ 
-                echo "<br>nome: ".$dados['nome'].
-                     "<br>endereco: ".$dados['endereco'];
-                     return;
-              }
-            }
-          } catch (Execption $erro) {
+
+            while ($dados = mysqli_fetch_Array($result)) {
+                if ($dados['idCliente']==$idCliente) {
+                    echo "<br>Código do Cliente : ".$dados['idCliente'].
+                         "<br>Nome : ".$dados['nome'].
+                         "<br>Endereco : ".$dados['endereco'].
+                         "<br>Telefone : ".$dados['telefone'].
+                         "<br>dataNascimento : ".$dados['dataNascimento'].
+                         "<br>Login : ".$dados['loginn'].
+                         "<br>Senha : ".$dados['senha'].
+                         "<br>Situação : ".$dados['situacaoCliente'];
+                         return;//Encerrar o processo
+                }//fim do if
+            }//fim do while
+        } catch (Exception $erro) {
             echo "Algo deu errado!".$erro;
-          }
-        }
+        }//fim do try
+    }//fim do metodo
+
+    function consultarLivros(Conexao $conexao, int $idLivros){
+      try {
+          $conn = $conexao->conectar();
+          $sql = "select * from livros";
+          $result = mysqli_query($conn, $sql);
+
+          while ($dados = mysqli_fetch_Array($result)) {
+              if ($dados['idLivros']==$idLivros) {
+                  echo "<br>Código Livro : ".$dados['idLivros'].
+                       "<br>Título do Livro : ".$dados['titulo'].
+                       "<br>Preço do Livro : ".$dados['precoLivro'].
+                       "<br>Quantidade : ".$dados['quantidadeLivros'].
+                       "<br>Situação : ".$dados['situacaoLivro'];
+                       return;//Encerrar o processo
+              }//fim do if
+          }//fim do while
+      } catch (Exception $erro) {
+          echo "Algo deu errado!".$erro;
+      }//fim do try
+  }//fim do metodo
+
+      
 
       }
 

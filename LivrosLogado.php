@@ -1,3 +1,17 @@
+<?php 
+    namespace PHP\Modelo;
+    require_once('DAO/Conexao.php');
+    require_once('DAO/Consultar.php');
+    use PHP\Modelo\DAO\Consultar;
+    use PHP\Modelo\DAO\Conexao;
+
+    $conexao = new Conexao();
+    $consultar = new Consultar();
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -86,7 +100,7 @@
                         <p class="fw-bold">Dom Casmurro</p>
                         <p class="text-muted">R$ 50,00</p>
                         <div class="d-flex justify-content-center mt-4">
-                            <a href="" class="btn btn-outline-warning" role="button">Adicionar</a>
+                            <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                         </div>
                     </div>
                 </div>
@@ -98,7 +112,7 @@
                         <p class="fw-bold">Steve Jobs</p>
                         <p class="text-muted">R$ 60,00</p>
                         <div class="d-flex justify-content-center mt-4">
-                            <a href="" class="btn btn-outline-warning" role="button">Adicionar</a>
+                            <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                         </div>
                     </div>
                 </div>
@@ -110,7 +124,7 @@
                         <p class="fw-bold">A Metamorfose</p>
                         <p class="text-muted">R$ 70,00</p>
                         <div class="d-flex justify-content-center mt-4">
-                            <a href="" class="btn btn-outline-warning" role="button">Adicionar</a>
+                            <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                         </div>
                     </div>
                 </div>
@@ -125,7 +139,7 @@
                         <p class="fw-bold">O hospital - Com brinde</p>
                         <p class="text-muted">R$ 59,90</p>
                         <div class="d-flex justify-content-center mt-4">
-                            <a href="" class="btn btn-outline-warning" role="button">Adicionar</a>
+                            <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                         </div>
                     </div>
                 </div>
@@ -137,7 +151,7 @@
                         <p class="fw-bold">Nunca Minta</p>
                         <p class="text-muted">R$ 80,00</p>
                         <div class="d-flex justify-content-center mt-4">
-                            <a href="" class="btn btn-outline-warning" role="button">Adicionar</a>
+                            <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                         </div>
                     </div>
                 </div>
@@ -149,7 +163,7 @@
                         <p class="fw-bold">Uma Vida Bela</p>
                         <p class="text-muted">R$ 65,00</p>
                         <div class="d-flex justify-content-center mt-4">
-                            <a href="" class="btn btn-outline-warning" role="button">Adicionar</a>
+                            <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                         </div>
                     </div>
                 </div>
@@ -160,7 +174,7 @@
                         <p class="fw-bold">Tempo de Reanceder as Estrelas</p>
                         <p class="text-muted">R$ 12,00</p>
                         <div class="d-flex justify-content-center mt-4">
-                            <a href="" class="btn btn-outline-warning" role="button">Adicionar</a>
+                            <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                         </div>
                     </div>
                 </div>
@@ -171,7 +185,7 @@
                         <p class="fw-bold">As Pequenas Alegrias</p>
                         <p class="text-muted">R$ 20,00</p>
                         <div class="d-flex justify-content-center mt-4">
-                            <a href="" class="btn btn-outline-warning" role="button">Adicionar</a>
+                            <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                         </div>
                     </div>
                 </div>
@@ -182,7 +196,7 @@
                         <p class="fw-bold">Oque Resta de Nós</p>
                         <p class="text-muted">R$ 25,00</p>
                         <div class="d-flex justify-content-center mt-4">
-                            <a href="" class="btn btn-outline-warning" role="button">Adicionar</a>
+                            <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                         </div>
                     </div>
                 </div>
@@ -193,7 +207,7 @@
                         <p class="fw-bold">O Príncipe</p>
                         <p class="text-muted">R$ 90,00</p>
                         <div class="d-flex justify-content-center mt-4">
-                            <a href="" class="btn btn-outline-warning" role="button">Adicionar</a>
+                            <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                         </div>
                     </div>
                 </div>
@@ -204,7 +218,7 @@
                         <p class="fw-bold">Elantris</p>
                         <p class="text-muted">R$ 75,00</p>
                         <div class="d-flex justify-content-center mt-4">
-                            <a href="" class="btn btn-outline-warning" role="button">Adicionar</a>
+                            <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                         </div>
                     </div>
                 </div>
@@ -215,7 +229,7 @@
                         <p class="fw-bold">O Hobbit</p>
                         <p class="text-muted">R$ 120,00</p>
                         <div class="d-flex justify-content-center mt-4">
-                            <a href="" class="btn btn-outline-warning" role="button">Adicionar</a>
+                            <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                         </div>
                     </div>
                 </div>

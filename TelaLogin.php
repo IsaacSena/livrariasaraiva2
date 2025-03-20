@@ -1,5 +1,5 @@
 <?php 
-    namespace PHP\Modelo\Telas;
+    namespace PHP\Modelo;
     require_once('DAO/Conexao.php');
     require_once('DAO/Consultar.php');
     use PHP\Modelo\DAO\Consultar;
