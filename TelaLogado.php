@@ -123,7 +123,7 @@
                                 <p class="fw-bold">Steve Jobs</p>
                                 <p class="text-muted">R$ 60,00</p>
                                 <div class="d-flex justify-content-center mt-4">
-                                    <button class="btn btn-outline-warning" role="button">Adicionar</button>
+                                <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                                 </div>
                             </div>
                         </div>
@@ -135,7 +135,7 @@
                                 <p class="fw-bold">A Metamorfose</p>
                                 <p class="text-muted">R$ 70,00</p>
                                 <div class="d-flex justify-content-center mt-4">
-                                    <button class="btn btn-outline-warning" role="button">Adicionar</button>
+                                <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                                 </div>
                             </div>
                         </div>
@@ -150,7 +150,7 @@
                                 <p class="fw-bold">O hospital - Com brinde</p>
                                 <p class="text-muted">R$ 59,90</p>
                                 <div class="d-flex justify-content-center mt-4">
-                                    <button class="btn btn-outline-warning" role="button">Adicionar</button>
+                                <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                                 </div>
                             </div>
                         </div>
@@ -162,7 +162,7 @@
                                 <p class="fw-bold">Nunca Minta</p>
                                 <p class="text-muted">R$ 80,00</p>
                                 <div class="d-flex justify-content-center mt-4">
-                                    <button class="btn btn-outline-warning" role="button">Adicionar</button>
+                                <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                                 </div>
                             </div>
                         </div>
@@ -174,7 +174,7 @@
                                 <p class="fw-bold">Uma Vida Bela</p>
                                 <p class="text-muted">R$ 65,00</p>
                                 <div class="d-flex justify-content-center mt-4">
-                                    <button class="btn btn-outline-warning" role="button">Adicionar</button>
+                                <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                                 </div>
                             </div>
                         </div>
