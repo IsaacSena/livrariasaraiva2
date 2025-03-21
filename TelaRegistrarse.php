@@ -1,5 +1,5 @@
 <?php 
-    namespace PHP\Modelo\Telas;
+    namespace PHP\Modelo;
     require_once('DAO/Conexao.php');
     require_once('DAO/Inserir.php');
    
@@ -89,8 +89,9 @@
                   $dataNascimento = $_POST['dataNascimento'];
                   $loginn = $_POST['loginn'];
                   $senha = $_POST['senha'];
+                  $situacaoLivro = "Ativo";
                   
-                  $inserir->cadastrarCliente($conexao, $nome, $endereco, $telefone, $dataNascimento, $loginn, $senha);
+                  $inserir->cadastrarCliente($conexao, $nome, $endereco, $telefone, $dataNascimento, $loginn, $senha,$situacaoLivro);
           
                 } catch (Except $erro) {
                   echo "Algo deu errado!<br><br>$erro";

@@ -1,5 +1,5 @@
 <?php 
-    namespace PHP\Modelo\Telas;
+    namespace PHP\Modelo;
     require_once('DAO/Conexao.php');
     require_once('DAO/Consultar.php');
     use PHP\Modelo\DAO\Consultar;
@@ -71,6 +71,7 @@
 
           <?php
           if ((isset($_POST['loginn'])&& $_POST['loginn'] != "" && $_POST['senha'] && $_POST['senha'] != "")) {
+            header("Location: TelaLogado.php");
              $consultar->consultarLogin($conexao,$_POST['loginn'],$_POST['senha']);
           }
          

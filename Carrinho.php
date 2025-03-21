@@ -1,132 +1,138 @@
+<?php
+// Classe de Conexão ao Banco de Dados
+class Conexao {
+    private $host = 'localhost';
+    private $user = 'root'; // Atualize com o seu usuário
+    private $password = ''; // Atualize com a sua senha
+    private $database = 'saraiva';
+    public $connection;
+
+    public function __construct() {
+        $this->connection = new mysqli($this->host, $this->user, $this->password, $this->database);
+        if ($this->connection->connect_error) {
+            die("Falha na conexão: " . $this->connection->connect_error);
+        }
+    }
+
+    public function getConnection() {
+        return $this->connection;
+    }
+}
+
+// Variáveis
+$nome = '';
+$endereco = '';
+$tituloLivro = 'Dom Casmurro'; // Título fixo para este exemplo
+$precoLivro = 50.00; // Preço fixo para o exemplo
+$quantidade = 1; // Quantidade inicial padrão
+$precoTotal = $precoLivro * $quantidade; // Preço total inicial
+$msgErro = '';
+
+// Verificação de Login e Recuperação de Dados
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login']) && isset($_POST['senha'])) {
+    $login = $_POST['login'];
+    $senha = $_POST['senha'];
+
+    $conexao = new Conexao();
+    $conn = $conexao->getConnection();
+
+    // Consulta no banco para buscar nome e endereço
+    $query = "SELECT nome, endereco FROM cliente WHERE loginn = ? AND senha = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("ss", $login, $senha);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        // Usuário encontrado
+        $cliente = $result->fetch_assoc();
+        $nome = $cliente['nome'];
+        $endereco = $cliente['endereco'];
+    } else {
+        $msgErro = "Login ou senha inválidos!";
+    }
+
+    $stmt->close();
+    $conn->close();
+}
+
+// Atualização do preço total com base na quantidade enviada
+if (isset($_POST['quantidade']) && is_numeric($_POST['quantidade'])) {
+    $quantidade = intval($_POST['quantidade']);
+    $precoTotal = $precoLivro * $quantidade;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styles.css"> <!-- Verifique se o caminho está correto -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <title>Carrinho</title>
+    <title>Finalizar Compra</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+        // Atualização dinâmica do preço total no frontend
+        function atualizarPrecoTotal() {
+            const precoLivro = parseFloat(document.getElementById('precoLivro').value);
+            const quantidade = parseInt(document.getElementById('quantidade').value);
+            const precoTotal = precoLivro * quantidade;
+            document.getElementById('precoTotal').value = precoTotal.toFixed(2);
+        }
+    </script>
 </head>
 <body>
-
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg bg-white py-3 fixed-top">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="main.php">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Saraiva_logo.svg/2560px-Saraiva_logo.svg.png" alt="Logo" style="width: 250px; height: auto;">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="main.php">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="Livros.php">Livros</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="SobreNos.php">Sobre-nós</a>
-                </li>
-            </ul>
-            <form class="d-flex ms-0" role="search">
-                <input class="form-control me-1" type="search" placeholder="Pesquisar" aria-label="Pesquisar" style="width: 400px;">
-                <button class="btn btn-outline-success ms-0" type="submit">Pesquisar</button>
-            </form>
-        </div>
-    </div>
-</nav>
-<!--fim da navbar-->
-
-<h1>Consultar Cliente</h1><br>
-
-
-        <form class = "form-control form-control-sm" method="POST"  style = "width;50%;margin">
-        <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">CPF</label>
-          <input type="text" class="form-control" id="exampleFormControlInput1" name = "idPedido">
-        </div>
-        <button type="submit" class="btn btn-primary" value = "1">Consultar
-
-            <?php
-            $consultar->consultarPedido($conexao,$_POST['idPedido']);
-
-            ?>
-        </button>
-    </form>
-
-
-<div class="container mt-2">
-    <div class="row">
-        <!-- Novos Produtos (Aside) -->
-        <aside class="col-md-3">
-            <div class="Main p-3 shadow-sm rounded border">
-                <h4 class="fw-bold border-bottom pb-2">Novos Produtos</h4>
-                <!-- Card de Produto -->
-                <div class="card mt-3" style="width: 18rem;">
-                    <img src="..." class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
+    <div class="container mt-5">
+        <h2 class="text-center">Login do Cliente</h2>
+        <hr>
+        <form action="" method="POST">
+            <div class="mb-3">
+                <label for="login" class="form-label"><strong>Login:</strong></label>
+                <input type="text" class="form-control" id="login" name="login" required>
             </div>
-        </aside>
+            <div class="mb-3">
+                <label for="senha" class="form-label"><strong>Senha:</strong></label>
+                <input type="password" class="form-control" id="senha" name="senha" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Entrar</button>
+        </form>
+        
+        <?php if ($msgErro): ?>
+            <p class="mt-3 text-danger text-center"><?php echo $msgErro; ?></p>
+        <?php endif; ?>
+
+        <?php if ($nome && $endereco): ?>
+            <hr>
+            <h3 class="text-center">Informações do Cliente e Pedido</h3>
+            <p><strong>Nome:</strong> <?php echo htmlspecialchars($nome); ?></p>
+            <p><strong>Endereço:</strong> <?php echo htmlspecialchars($endereco); ?></p>
+            <p><strong>Título do Livro:</strong> <?php echo $tituloLivro; ?></p>
+            <p><strong>Preço Unitário do Livro:</strong> R$ <?php echo number_format($precoLivro, 2, ',', '.'); ?></p>
+
+            <form action="" method="POST">
+                <input type="hidden" name="precoLivro" id="precoLivro" value="<?php echo $precoLivro; ?>">
+                <div class="mb-3">
+                    <label for="quantidade" class="form-label"><strong>Quantidade:</strong></label>
+                    <input type="number" class="form-control" id="quantidade" name="quantidade" value="1" min="1" oninput="atualizarPrecoTotal()" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="precoTotal" class="form-label"><strong>Preço Total:</strong></label>
+                    <input type="text" class="form-control" id="precoTotal" name="precoTotal" value="<?php echo number_format($precoTotal, 2, ',', '.'); ?>" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label for="pagamento" class="form-label"><strong>Forma de Pagamento:</strong></label>
+                    <select class="form-select" id="pagamento" name="pagamento" required>
+                        <option value="Cartão de Crédito">Cartão de Crédito</option>
+                        <option value="Boleto">Boleto</option>
+                        <option value="Pix">Pix</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100">Finalizar Pedido</button>
+            </form>
+        <?php endif; ?>
     </div>
-</div>
 
-
-<footer class="text-center text-lg-start text-muted" style="background-color: #D3D3D3; width: 100%;">
-
-  
-<section class="">
-  <div class="container text-center text-md-start mt-5">
-    <!-- Grid row -->
-    <div class="row mt-3">
-      <!-- Grid column -->
-      <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-        <!-- Content -->
-        <a href="main.php"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Saraiva_logo.svg/2560px-Saraiva_logo.svg.png"  alt="Logo da Empresa" style="max-width: 100px; height: auto; margin-bottom: 22px;">
-        <p></a>
-          Loja especializada em venda de livros
-          Av.Senador Vergueiro - 400  São Bernardo do Campo - SP
-          Email:senacsbcsp@hotmail.com
-          © 2025,Saraiva - HTML E-commerce Template
-          Todos os direitos reservados
-        </p>
-      </div>
-      <!-- Grid column -->
-
-      <!-- Grid column -->
-      <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-        <!-- Links -->
-        <h6 class="text-uppercase fw-bold mb-4">
-          Conta
-        </h6>
-        <p>
-          <a href="TelaLogin.php" class="text-reset">Login</a>
-        </p>
-        <p>
-          <a href="TelaRegistrarse.php" class="text-reset">Criar Conta</a>
-        </p>
-        <p>
-          <a href="" class="text-reset">Meu Carrinho</a>
-        </p>
-      </div>
-      <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-        <h6 class="text-uppercase fw-bold mb-4">
-          Livros
-        </h6>
-        <p>
-          <a href="Livros.php" class="text-reset">Todos os Livros</a>
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-</footer>
-<!-- Footer -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
