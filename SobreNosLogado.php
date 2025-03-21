@@ -146,7 +146,7 @@
     left: 100%;         /* Posiciona à direita do item pai */
     top: 0;             /* Ajuste vertical caso necessário */
 }
-
+</style>
 
     <!--fim da navbar-->
 
