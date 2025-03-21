@@ -71,7 +71,7 @@
 
           <?php
           if ((isset($_POST['loginn'])&& $_POST['loginn'] != "" && $_POST['senha'] && $_POST['senha'] != "")) {
-            header("Location: TelaLogado.php");
+           
              $consultar->consultarLogin($conexao,$_POST['loginn'],$_POST['senha']);
           }
          
