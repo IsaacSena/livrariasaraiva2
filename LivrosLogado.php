@@ -1,3 +1,17 @@
+<?php 
+    namespace PHP\Modelo;
+    require_once('DAO/Conexao.php');
+    require_once('DAO/Consultar.php');
+    use PHP\Modelo\DAO\Consultar;
+    use PHP\Modelo\DAO\Conexao;
+
+    $conexao = new Conexao();
+    $consultar = new Consultar();
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -13,33 +27,91 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg bg-white py-3 fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="main.php">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Saraiva_logo.svg/2560px-Saraiva_logo.svg.png" alt="Logo" style="width: 250px; height: auto;">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="main.php">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Livros.php">Livros</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="SobreNos.php">Sobre-nós</a>
-                    </li>
-                </ul>
-                <form class="d-flex ms-0" role="search">
-                    <input class="form-control me-1" type="search" placeholder="Pesquisar" aria-label="Pesquisar" style="width: 400px;">
-                    <button class="btn btn-outline-success ms-0" type="submit">Pesquisar</button>
-                </form>
-            </div>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg bg-white py-3 fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="TelaLogado.php">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Saraiva_logo.svg/2560px-Saraiva_logo.svg.png" alt="Logo" style="width: 250px; height: auto;">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="TelaLogado.php">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="LivrosLogado.php">Livros</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="SobreNosLogado.php">Sobre-nós</a>
+                </li>
+                <!-- Submenu Dropdown para Admin -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAdmin" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Admin
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownAdmin">
+                        <!-- Submenu Pedido -->
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" href="#">Pedidos</a>
+                            <ul class="dropdown-menu">
+                                <!-- Novo item Consultar -->
+                                <li><a class="dropdown-item" href="ConsultarPedidos.php">Consultar</a></li>
+                                <!-- Outros itens existentes -->
+
+                            </ul>
+                        </li>
+                        <!-- Submenu Cliente -->
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" href="#">Cliente</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="ConsultarCliente.php">Consultar</a></li>
+                                <li><a class="dropdown-item" href="AtualizarCliente.php">Atualizar</a></li>
+                                <li><a class="dropdown-item" href="DesabilitarCliente.php">Desabilitar</a></li>
+                            </ul>
+                        </li>
+                       
+                        <!-- Submenu Livros -->
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" href="#">Livros</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="CadastrarLivros.php">Cadastrar</a></li>
+                                <li><a class="dropdown-item" href="ConsultarLivro.php">Consultar</a></li>
+                                <li><a class="dropdown-item" href="AtualizarLivro.php">Atualizar</a></li>
+                                <li><a class="dropdown-item" href="DesabilitarLivros.php">Desabilitar</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>   
+            <form class="d-flex ms-0" role="search">
+                <input class="form-control me-1" type="search" placeholder="Pesquisar" aria-label="Pesquisar" style="width: 400px;">
+                <button class="btn btn-outline-success ms-0" type="submit">Pesquisar</button>
+            </form>
         </div>
-    </nav>
+    </div>
+</nav>
+
+
+<!-- CSS Adicional para Suporte aos Submenus -->
+<style>
+/* CSS Adicional para Suporte aos Submenus */
+.dropdown-menu .dropdown-menu {
+    margin-left: 0;  /* Remover o deslocamento da esquerda */
+    margin-top: 0;   /* Remover o deslocamento do topo */
+    position: absolute;
+    top: 0;
+    left: 100%;      /* Posicionar o submenu à direita do item pai */
+}
+
+.dropdown-submenu:hover > .dropdown-menu {
+    display: block;
+    position: absolute; /* Assegura que o submenu fique em relação ao item pai */
+    left: 100%;         /* Posiciona à direita do item pai */
+    top: 0;             /* Ajuste vertical caso necessário */
+}
+</style>
     <!-- Fim da Navbar -->
 
     <!-- Carrossel de banners -->
@@ -86,7 +158,7 @@
                         <p class="fw-bold">Dom Casmurro</p>
                         <p class="text-muted">R$ 50,00</p>
                         <div class="d-flex justify-content-center mt-4">
-                            <a href="" class="btn btn-outline-warning" role="button">Adicionar</a>
+                            <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                         </div>
                     </div>
                 </div>
@@ -98,7 +170,7 @@
                         <p class="fw-bold">Steve Jobs</p>
                         <p class="text-muted">R$ 60,00</p>
                         <div class="d-flex justify-content-center mt-4">
-                            <a href="" class="btn btn-outline-warning" role="button">Adicionar</a>
+                            <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                         </div>
                     </div>
                 </div>
@@ -110,7 +182,7 @@
                         <p class="fw-bold">A Metamorfose</p>
                         <p class="text-muted">R$ 70,00</p>
                         <div class="d-flex justify-content-center mt-4">
-                            <a href="" class="btn btn-outline-warning" role="button">Adicionar</a>
+                            <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                         </div>
                     </div>
                 </div>
@@ -125,7 +197,7 @@
                         <p class="fw-bold">O hospital - Com brinde</p>
                         <p class="text-muted">R$ 59,90</p>
                         <div class="d-flex justify-content-center mt-4">
-                            <a href="" class="btn btn-outline-warning" role="button">Adicionar</a>
+                            <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                         </div>
                     </div>
                 </div>
@@ -137,7 +209,7 @@
                         <p class="fw-bold">Nunca Minta</p>
                         <p class="text-muted">R$ 80,00</p>
                         <div class="d-flex justify-content-center mt-4">
-                            <a href="" class="btn btn-outline-warning" role="button">Adicionar</a>
+                            <a href="Carrinho.php" class="btn btn-outline-warning" role="button" name = "codigoLivros" value = "1">Adicionar</a>
                         </div>
                     </div>
                 </div>
@@ -149,7 +221,7 @@
                         <p class="fw-bold">Uma Vida Bela</p>
                         <p class="text-muted">R$ 65,00</p>
                         <div class="d-flex justify-content-center mt-4">
-                            <a href="" class="btn btn-outline-warning" role="button">Adicionar</a>
+                            <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                         </div>
                     </div>
                 </div>
@@ -160,7 +232,7 @@
                         <p class="fw-bold">Tempo de Reanceder as Estrelas</p>
                         <p class="text-muted">R$ 12,00</p>
                         <div class="d-flex justify-content-center mt-4">
-                            <a href="" class="btn btn-outline-warning" role="button">Adicionar</a>
+                            <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                         </div>
                     </div>
                 </div>
@@ -171,7 +243,7 @@
                         <p class="fw-bold">As Pequenas Alegrias</p>
                         <p class="text-muted">R$ 20,00</p>
                         <div class="d-flex justify-content-center mt-4">
-                            <a href="" class="btn btn-outline-warning" role="button">Adicionar</a>
+                            <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                         </div>
                     </div>
                 </div>
@@ -182,7 +254,7 @@
                         <p class="fw-bold">Oque Resta de Nós</p>
                         <p class="text-muted">R$ 25,00</p>
                         <div class="d-flex justify-content-center mt-4">
-                            <a href="" class="btn btn-outline-warning" role="button">Adicionar</a>
+                            <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                         </div>
                     </div>
                 </div>
@@ -193,7 +265,7 @@
                         <p class="fw-bold">O Príncipe</p>
                         <p class="text-muted">R$ 90,00</p>
                         <div class="d-flex justify-content-center mt-4">
-                            <a href="" class="btn btn-outline-warning" role="button">Adicionar</a>
+                            <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                         </div>
                     </div>
                 </div>
@@ -204,7 +276,7 @@
                         <p class="fw-bold">Elantris</p>
                         <p class="text-muted">R$ 75,00</p>
                         <div class="d-flex justify-content-center mt-4">
-                            <a href="" class="btn btn-outline-warning" role="button">Adicionar</a>
+                            <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                         </div>
                     </div>
                 </div>
@@ -215,7 +287,7 @@
                         <p class="fw-bold">O Hobbit</p>
                         <p class="text-muted">R$ 120,00</p>
                         <div class="d-flex justify-content-center mt-4">
-                            <a href="" class="btn btn-outline-warning" role="button">Adicionar</a>
+                            <a href="Carrinho.php" class="btn btn-outline-warning" role="button">Adicionar</a>
                         </div>
                     </div>
                 </div>

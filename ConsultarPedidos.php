@@ -1,0 +1,200 @@
+<?php 
+    namespace PHP\Modelo;
+    require_once('DAO/Conexao.php');
+    require_once('DAO/Consultar.php');
+    require_once('DAO/Atualizar.php');
+    require_once('DAO/Desabilitar.php');
+    require_once('DAO/Inserir.php');
+    use PHP\Modelo\DAO\Inserir;
+    use PHP\Modelo\DAO\Atualizar;
+    use PHP\Modelo\DAO\Desabilitar;
+    use PHP\Modelo\DAO\Conexao;
+    use PHP\Modelo\DAO\Consultar;
+    
+    $inserir = new Inserir();
+    $desabilitar = new Desabilitar();
+    $atualizar = new Atualizar();
+    $conexao = new Conexao();
+    $consultar = new Consultar();
+?>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css"> <!-- Verifique se o caminho está correto -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <title>Consultar Pedido</title>
+    <style>
+        .form-container {
+            width: 50%;
+            margin: 0 auto;
+            padding-top: 100px;
+        }
+        .consultar-box {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-top: 20px;
+            background-color: #f9f9f9;
+        }
+        .form-label {
+            font-weight: bold;
+        }
+        .text-center-custom {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+<nav class="navbar navbar-expand-lg bg-white py-3 fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="TelaLogado.php">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Saraiva_logo.svg/2560px-Saraiva_logo.svg.png" alt="Logo" style="width: 250px; height: auto;">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="TelaLogado.php">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="LivrosLogado.php">Livros</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="SobreNosLogado.php">Sobre-nós</a>
+                </li>
+                <!-- Submenu Dropdown para Admin -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAdmin" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Admin
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownAdmin">
+                        <!-- Submenu Pedido -->
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" href="#">Pedidos</a>
+                            <ul class="dropdown-menu">
+                                <!-- Novo item Consultar -->
+                                <li><a class="dropdown-item" href="ConsultarPedidos.php">Consultar</a></li>
+                                <!-- Outros itens existentes -->
+
+                            </ul>
+                        </li>
+                        <!-- Submenu Cliente -->
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" href="#">Cliente</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="ConsultarCliente.php">Consultar</a></li>
+                                <li><a class="dropdown-item" href="AtualizarCliente.php">Atualizar</a></li>
+                                <li><a class="dropdown-item" href="DesabilitarCliente.php">Desabilitar</a></li>
+                            </ul>
+                        </li>
+                       
+                        <!-- Submenu Livros -->
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" href="#">Livros</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="CadastrarLivros.php">Cadastrar</a></li>
+                                <li><a class="dropdown-item" href="ConsultarLivro.php">Consultar</a></li>
+                                <li><a class="dropdown-item" href="AtualizarLivro.php">Atualizar</a></li>
+                                <li><a class="dropdown-item" href="DesabilitarLivros.php">Desabilitar</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>   
+            <form class="d-flex ms-0" role="search">
+                <input class="form-control me-1" type="search" placeholder="Pesquisar" aria-label="Pesquisar" style="width: 400px;">
+                <button class="btn btn-outline-success ms-0" type="submit">Pesquisar</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+
+<!-- CSS Adicional para Suporte aos Submenus -->
+<style>
+/* CSS Adicional para Suporte aos Submenus */
+.dropdown-menu .dropdown-menu {
+    margin-left: 0;  /* Remover o deslocamento da esquerda */
+    margin-top: 0;   /* Remover o deslocamento do topo */
+    position: absolute;
+    top: 0;
+    left: 100%;      /* Posicionar o submenu à direita do item pai */
+}
+
+.dropdown-submenu:hover > .dropdown-menu {
+    display: block;
+    position: absolute; /* Assegura que o submenu fique em relação ao item pai */
+    left: 100%;         /* Posiciona à direita do item pai */
+    top: 0;             /* Ajuste vertical caso necessário */
+}
+</style>
+
+    <!-- Tela Consultar Pedido -->
+    <div class="container form-container">
+        <h1 class="text-center-custom">Consultar Pedido</h1><br>
+
+        <!-- Formulário para consultar pedido -->
+        <form class="form-control form-control-sm" method="POST">
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Digite o código do pedido</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" name="idPedido" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Consultar</button>
+        </form>
+
+        <!-- Caixa para exibir as informações do pedido -->
+        <?php
+        if (isset($_POST['idPedido']) && $_POST['idPedido'] != "") {
+            $pedido = $consultar->consultarPedido($conexao, $_POST['idPedido']);
+            if ($pedido) {
+                echo '<div class="consultar-box">';
+                echo '<h4>Informações do Pedido</h4>';
+                echo '<p><strong>Código Pedido:</strong> ' . $pedido['idPedido'] . '</p>';
+                echo '<p><strong>Nome do Cliente:</strong> ' . $pedido['clienteNome'] . '</p>';
+                echo '<p><strong>Título do Livro:</strong> ' . $pedido['livroTitulo'] . '</p>';
+                echo '<p><strong>Preço Total:</strong> ' . $pedido['precoTotal'] . '</p>';
+                echo '<p><strong>Forma de Pagamento:</strong> ' . $pedido['pagamento'] . '</p>';
+                echo '</div>';
+            }
+        }
+        ?>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center text-lg-start text-muted" style="background-color: #D3D3D3; width: 100%; padding-top: 50px;">
+        <section class="">
+            <div class="container text-center text-md-start mt-5">
+                <div class="row mt-3">
+                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                        <a href="main.php"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Saraiva_logo.svg/2560px-Saraiva_logo.svg.png" alt="Logo da Empresa" style="max-width: 100px; height: auto; margin-bottom: 22px;">
+                        <p></a>
+                            Loja especializada em venda de livros
+                            Av. Senador Vergueiro - 400 São Bernardo do Campo - SP
+                            Email: senacsbcsp@hotmail.com
+                            © 2025, Saraiva - HTML E-commerce Template
+                            Todos os direitos reservados
+                        </p>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <h6 class="text-uppercase fw-bold mb-4">Conta</h6>
+                        <p><a href="TelaLogin.php" class="text-reset">Login</a></p>
+                        <p><a href="TelaRegistrarse.php" class="text-reset">Criar Conta</a></p>
+                    </div>
+                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <h6 class="text-uppercase fw-bold mb-4">Livros</h6>
+                        <p><a href="Livros.php" class="text-reset">Todos os Livros</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </footer>
+
+</body>
+</html>
